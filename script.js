@@ -592,13 +592,37 @@ if (mobileMenuBtn && mobileDrawer) {
   });
 }
 
-// --- Contact Form Submission Handler ---
+// --- Contact Form Submission Handler (Netlify Forms via AJAX) ---
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('Thank you for your message, Muhammad will get back to you shortly!');
-    contactForm.reset();
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalLabel = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-60', 'cursor-wait');
+    }
+    const body = new URLSearchParams(new FormData(contactForm)).toString();
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    })
+      .then(() => {
+        alert('Thank you for your message, Muhammad will get back to you shortly!');
+        contactForm.reset();
+      })
+      .catch(() => {
+        alert('Something went wrong sending your message. Please email allocator123@gmail.com directly.');
+      })
+      .finally(() => {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalLabel;
+          submitBtn.classList.remove('opacity-60', 'cursor-wait');
+        }
+      });
   });
 }
 
