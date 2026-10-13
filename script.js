@@ -36,9 +36,36 @@ resizeCanvas();
 
 // --- Particle Engine ---
 const particles = [];
-const maxBackgroundParticles = 25;
+const maxBackgroundParticles = 14;
 const clickParticles = [];
 const trailParticles = [];
+const MAX_TRAIL_PARTICLES = 18;
+
+// Emoji sprite cache: pre-render each emoji once to an offscreen canvas,
+// then blit with drawImage (much cheaper than fillText + scale every frame).
+const emojiSpriteCache = new Map();
+function getEmojiSprite(char, px) {
+  const size = Math.max(12, Math.round(px));
+  const key = char + '_' + size;
+  let sprite = emojiSpriteCache.get(key);
+  if (!sprite) {
+    sprite = document.createElement('canvas');
+    sprite.width = size;
+    sprite.height = size;
+    const sctx = sprite.getContext('2d');
+    sctx.font = size + 'px sans-serif';
+    sctx.textAlign = 'center';
+    sctx.textBaseline = 'middle';
+    sctx.fillText(char, size / 2, size / 2);
+    // Bound cache growth: drop oldest entry past 60 sprites
+    if (emojiSpriteCache.size > 60) {
+      const firstKey = emojiSpriteCache.keys().next().value;
+      emojiSpriteCache.delete(firstKey);
+    }
+    emojiSpriteCache.set(key, sprite);
+  }
+  return sprite;
+}
 
 class BackgroundParticle {
   constructor() {
@@ -99,13 +126,13 @@ class BackgroundParticle {
       ctx.fillStyle = `rgba(159, 203, 152, ${this.opacity})`; // Mint Accent
       ctx.fill();
     } else {
-      // Draw morphing emoji
+      // Draw morphing emoji via cached sprite (fast drawImage blit)
+      const dim = Math.max(1, this.size * 5 * this.morphScale);
+      const sprite = getEmojiSprite(this.char, this.size * 5);
       ctx.translate(this.x, this.y);
       ctx.rotate(this.rotation);
       ctx.globalAlpha = this.opacity;
-      const scaleFactor = (this.size * 0.5) * this.morphScale;
-      ctx.scale(scaleFactor, scaleFactor);
-      ctx.fillText(this.char, 0, 0);
+      ctx.drawImage(sprite, -dim / 2, -dim / 2, dim, dim);
     }
     ctx.restore();
   }
@@ -156,9 +183,9 @@ class SplashParticle {
       ctx.fill();
     } else {
       ctx.translate(this.x, this.y);
-      const scaleFactor = this.size * 0.12;
-      ctx.scale(scaleFactor, scaleFactor);
-      ctx.fillText(this.char, 0, 0);
+      ctx.globalAlpha = this.opacity;
+      const dim = this.size * 4;
+      ctx.drawImage(getEmojiSprite(this.char, dim), -dim / 2, -dim / 2, dim, dim);
     }
     ctx.restore();
   }
@@ -193,7 +220,7 @@ class TrailParticle {
     this.x += this.vx;
     this.y += this.vy;
     this.rotation += this.rotationSpeed;
-    this.opacity -= 0.025;
+    this.opacity -= 0.045;
   }
 
   draw() {
@@ -201,9 +228,8 @@ class TrailParticle {
     ctx.translate(this.x, this.y);
     ctx.rotate(this.rotation);
     ctx.globalAlpha = this.opacity;
-    const scaleFactor = this.size * 0.1;
-    ctx.scale(scaleFactor, scaleFactor);
-    ctx.fillText(this.char, 0, 0);
+    const dim = this.size * 2.2;
+    ctx.drawImage(getEmojiSprite(this.char, dim), -dim / 2, -dim / 2, dim, dim);
     ctx.restore();
   }
 }
@@ -214,13 +240,14 @@ for (let i = 0; i < maxBackgroundParticles; i++) {
 }
 
 // --- Animation Loop ---
+let lastFrameTime = performance.now();
 function animate(timestamp) {
   ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-  
-  // Set text properties once per frame for layout-safe canvas performance
-  ctx.font = "24px sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
+
+  // Frame-time guard: skip new trail spawns on slow frames to avoid spiral
+  const frameDelta = timestamp - lastFrameTime;
+  lastFrameTime = timestamp;
+  const slowFrame = frameDelta > 40;
   
   // 1. Custom Cursor Elastic Trail Lerp
   state.trailX += (state.mouseX - state.trailX) * 0.15;
@@ -237,8 +264,8 @@ function animate(timestamp) {
   state.mouseSpeed = Math.sqrt(dx * dx + dy * dy);
   
   // Spawn trail particles if moving and in active custom section, with a hard limit on max particles to avoid frame drops
-  if (state.mouseSpeed > 8 && state.activeHoverSection !== 'default' && trailParticles.length < 40) {
-    if (Math.random() < 0.15) { // limit spawn rate
+  if (!slowFrame && state.mouseSpeed > 12 && state.activeHoverSection !== 'default' && trailParticles.length < MAX_TRAIL_PARTICLES) {
+    if (Math.random() < 0.08) { // limit spawn rate
       trailParticles.push(new TrailParticle(state.mouseX, state.mouseY, state.activeHoverSection));
     }
   }
@@ -348,7 +375,7 @@ window.addEventListener('click', (e) => {
   }, 500);
 
   // 2. Spawn Canvas Splash Particles
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 8; i++) {
     clickParticles.push(new SplashParticle(e.clientX, e.clientY));
   }
 });
