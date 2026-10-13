@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playpen+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --forest-green: #346739;
+  --leaf-green: #79AE6F;
+  --mint-accent: #9FCB98;
+  --pastel-cream: #F2EDC2;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--pastel-cream);
+  color: var(--forest-green);
+  overflow-x: hidden;
+}
+
+/* Hide standard cursor on desktop/devices with a precise pointer */
+@media (pointer: fine) {
+  body, a, button, input, select, textarea, [role="button"], iframe, video {
+    cursor: none !important;
+  }
+}
+
+/* Custom Cursor Elements */
+#custom-cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  will-change: transform;
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+#custom-cursor-trail {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #ffffff;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: difference;
+  will-change: transform;
+  transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+}
+
+/* Hover States for Interactive Elements */
+.cursor-hover #custom-cursor-dot {
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+}
+
+.cursor-hover #custom-cursor-trail {
+  width: 48px;
+  height: 48px;
+  border-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Click Splash Ripple */
+.click-splash {
+  position: fixed;
+  border: 2px solid var(--forest-green);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9997;
+  animation: splash-expand 0.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes splash-expand {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 1;
+    border-color: var(--leaf-green);
+  }
+  100% {
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+    border-color: var(--forest-green);
+  }
+}
+
+/* Particle Canvas Layer */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10; /* Above backgrounds, below text content and navigation */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--pastel-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--leaf-green);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--forest-green);
+}
+
+/* Baking Section (Cozy Bakery Theme) */
+.bakery-menu-font {
+  font-family: 'Playfair Display', serif;
+}
+
+.bakery-accent-font {
+  font-family: 'Playpen Sans', cursive;
+}
+
+.baking-paper {
+  background-color: #fcfaf0;
+  border: 2px dashed #d6cda3;
+  box-shadow: 0 10px 25px -5px rgba(52, 103, 57, 0.05);
+}
+
+/* Sales Section (Sharp Theme) */
+.sales-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(121, 174, 111, 0.2);
+}
+
+.sales-card:hover {
+  border-color: var(--forest-green);
+  box-shadow: 0 10px 30px -10px rgba(52, 103, 57, 0.15);
+}
+
+/* Hero Section Styles */
+.hero-clip {
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+/* Glassmorphism Navigation */
+.nav-glass {
+  background: rgba(242, 237, 194, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(52, 103, 57, 0.1);
+}
+
+/* Transitions */
+.transition-all-custom {
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Projects Section Mockup Browser Styles */
+.browser-frame {
+  box-shadow: 0 15px 35px -10px rgba(52, 103, 57, 0.15);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease, border-color 0.3s ease;
+}
+
+.browser-body img {
+  transition: transform 0.5s ease;
+}
+
+.group:hover .browser-frame {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(52, 103, 57, 0.25);
+  border-color: rgba(121, 174, 111, 0.4);
+}
+
+.group:hover .browser-body img {
+  transform: scale(1.03);
+}
+

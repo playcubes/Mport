@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muhammad | Portfolio</title>
+  <meta name="description" content="Personal portfolio of Muhammad - Tech Entrepreneur, Web Developer, and first-year BBA student at Manipal University.">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom config for Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              DEFAULT: '#346739',
+              light: '#4b8251',
+              dark: '#224726',
+            },
+            leaf: {
+              DEFAULT: '#79AE6F',
+              light: '#9cc793',
+              dark: '#5a8f51',
+            },
+            mint: {
+              DEFAULT: '#9FCB98',
+              light: '#bce0b5',
+              dark: '#7eab77',
+            },
+            cream: {
+              DEFAULT: '#F2EDC2',
+              light: '#faf6d9',
+              dark: '#dfd9ab',
+            }
+          },
+          fontFamily: {
+            outfit: ['Outfit', 'sans-serif'],
+            playfair: ['Playfair Display', 'serif'],
+            playpen: ['Playpen Sans', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-cream font-outfit text-forest relative min-h-screen selection:bg-leaf selection:text-white">
+
+  <!-- Custom Cursor Layer (Hidden on mobile) -->
+  <div id="custom-cursor-dot" class="hidden md:block"></div>
+  <div id="custom-cursor-trail" class="hidden md:block"></div>
+
+  <!-- Background Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Sticky Header & Navigation -->
+  <header class="fixed top-0 left-0 w-full z-50 nav-glass transition-all-custom py-4" id="main-header">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#home" class="text-2xl font-bold flex items-center gap-2 group cursor-pointer">
+        <span class="w-10 h-10 rounded-full bg-forest text-cream flex items-center justify-center font-playfair italic font-bold group-hover:bg-leaf transition-colors duration-300">MN</span>
+        <span class="tracking-wide hidden sm:inline group-hover:text-leaf transition-colors duration-300">Muhammad</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold tracking-wide uppercase">
+        <a href="#home" class="hover:text-leaf transition-colors duration-200">Home</a>
+        <a href="#projects" class="hover:text-leaf transition-colors duration-200">Projects</a>
+        <a href="#gallery" class="hover:text-leaf transition-colors duration-200">Media Gallery</a>
+        <a href="#baking" class="hover:text-leaf transition-colors duration-200">Cookie Business</a>
+        <a href="#ventures" class="hover:text-leaf transition-colors duration-200">Ventures &amp; Leadership</a>
+        <a href="#contact" class="hover:text-leaf transition-colors duration-200">Contact</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="hidden md:flex items-center gap-4">
+        <a href="resume/Resume Muhammad Naeem.pdf" download class="px-5 py-2.5 bg-forest text-cream hover:bg-leaf rounded-full text-sm font-semibold shadow-sm transition-all duration-300 hover:scale-105">
+          Download CV
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden p-2 text-forest hover:text-leaf transition-colors focus:outline-none" id="mobile-menu-btn" aria-label="Toggle menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="hamburger-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="close-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="hidden md:hidden absolute top-full left-0 w-full bg-cream-light border-b border-forest/10 py-6 px-6 shadow-lg transition-all duration-300" id="mobile-drawer">
+      <nav class="flex flex-col gap-4 text-base font-semibold tracking-wide uppercase">
+        <a href="#home" class="mobile-nav-link hover:text-leaf py-2 border-b border-forest/5">Home</a>
+        <a href="#projects" class="mobile-nav-link hover:text-leaf py-2 border-b border-forest/5">Projects</a>
+        <a href="#gallery" class="mobile-nav-link hover:text-leaf py-2 border-b border-forest/5">Media Gallery</a>
+        <a href="#baking" class="mobile-nav-link hover:text-leaf py-2 border-b border-forest/5">Cookie Business</a>
+        <a href="#ventures" class="mobile-nav-link hover:text-leaf py-2 border-b border-forest/5">Ventures &amp; Leadership</a>
+        <a href="#contact" class="mobile-nav-link hover:text-leaf py-2 pb-3">Contact</a>
+        <a href="resume/Resume Muhammad Naeem.pdf" download class="w-full text-center px-5 py-3 bg-forest text-cream hover:bg-leaf rounded-full text-sm font-semibold shadow-sm transition-all duration-300 mt-2 block">
+          Download CV
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center pt-24 pb-16 px-6 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20">
+      <!-- Text Area -->
+      <div class="lg:col-span-7 flex flex-col justify-center text-center lg:text-left space-y-6">
+        <div class="inline-flex items-center justify-center lg:justify-start gap-2 text-leaf font-bold tracking-widest text-xs uppercase bg-leaf/10 py-1.5 px-3 rounded-full w-fit mx-auto lg:mx-0">
+          <span class="w-2 h-2 rounded-full bg-leaf animate-ping"></span>
+          Tech Entrepreneur &amp; Developer
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-none text-forest">
+          Hi, I'm <span class="text-leaf italic font-playfair font-normal">Muhammad</span>
+        </h1>
+        <h2 class="text-xl sm:text-2xl font-semibold text-forest-light tracking-wide">
+          Developer &middot; Tech Entrepreneur &middot; BBA Student
+        </h2>
+        <p class="text-base sm:text-lg text-forest/80 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+          A tech-driven first-year BBA student at Manipal University and self-taught web developer based in Ajman, UAE. I build interactive web platforms (like Klipmengo LMS) and run digital-first local ventures, merging business strategy with hands-on software development.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+          <a href="#projects" class="w-full sm:w-auto px-8 py-4 bg-forest text-cream hover:bg-leaf rounded-full font-semibold shadow-md transition-all duration-300 hover:-translate-y-1 text-center">
+            Explore Projects
+          </a>
+          <a href="#contact" class="w-full sm:w-auto px-8 py-4 border-2 border-forest text-forest hover:bg-forest hover:text-cream rounded-full font-semibold transition-all duration-300 hover:-translate-y-1 text-center">
+            Get In Touch
+          </a>
+        </div>
+      </div>
+
+      <!-- Portrait Image Area -->
+      <div class="lg:col-span-5 flex justify-center items-center">
+        <div class="relative w-72 h-72 sm:w-96 sm:h-96 rounded-[2rem] group">
+          <!-- Decorative borders -->
+          <div class="absolute inset-0 border-4 border-leaf rounded-[2rem] rotate-3 scale-95 group-hover:rotate-6 transition-transform duration-500 z-0"></div>
+          <div class="absolute inset-0 border-4 border-mint rounded-[2rem] -rotate-3 scale-95 group-hover:-rotate-6 transition-transform duration-500 z-0"></div>
+          
+          <!-- Image Container -->
+          <div class="absolute inset-2 bg-cream-dark rounded-[1.8rem] overflow-hidden z-10 shadow-lg [transform:translate3d(0,0,0)]">
+            <img src="media/Headshot.jpeg" alt="Muhammad Profile" class="w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-transform duration-500">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Soft Decorative Shapes -->
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-mint/20 rounded-full blur-3xl -z-10 translate-x-1/3 translate-y-1/3"></div>
+    <div class="absolute top-1/4 left-0 w-80 h-80 bg-leaf/10 rounded-full blur-3xl -z-10 -translate-x-1/3"></div>
+  </section>
+
+  <!-- Web Projects Section -->
+  <section id="projects" class="py-24 px-6 relative z-20">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center space-y-4 mb-16">
+        <h2 class="text-xs uppercase font-extrabold tracking-widest text-leaf">Built From Scratch</h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-forest">Featured Web Projects</h3>
+        <p class="text-forest/70 max-w-xl mx-auto font-light">
+          A showcase of custom-coded web platforms combining business logic with fluid, interactive UI design.
+        </p>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Project 1: Klipmengo LMS (Upcoming) -->
+        <div class="bg-white/40 border border-forest/10 p-6 rounded-3xl shadow-lg hover:border-leaf/50 transition-all-custom flex flex-col justify-between group relative overflow-hidden">
+          <!-- Coming Soon ribbon -->
+          <div class="absolute top-5 -right-11 rotate-45 bg-amber-400 text-forest-dark text-[11px] font-extrabold uppercase tracking-widest px-12 py-1.5 shadow-md z-10">Upcoming</div>
+          <div>
+            <!-- Browser Mockup -->
+            <div class="browser-frame rounded-xl overflow-hidden shadow-md mb-6 border border-forest/10 bg-forest-dark/5 opacity-90">
+              <div class="browser-header px-4 py-2 bg-forest/10 border-b border-forest/10 flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                <div class="bg-white/60 text-[10px] text-forest/70 px-4 py-0.5 rounded-md flex-1 text-center font-mono max-w-[200px] mx-auto truncate">klipmengo LMS — coming soon</div>
+              </div>
+              <div class="browser-body relative aspect-video overflow-hidden">
+                <img src="media/klipmengo_mockup.png" alt="Klipmengo LMS Platform Preview" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 grayscale-[30%]">
+                <div class="absolute inset-0 bg-forest/40 backdrop-blur-[1px] flex flex-col items-center justify-center gap-2 text-center p-4">
+                  <span class="inline-flex items-center gap-2 text-cream font-bold tracking-widest text-xs uppercase bg-white/15 py-1.5 px-4 rounded-full border border-white/20">
+                    <span class="w-2 h-2 rounded-full bg-amber-300 animate-ping"></span>
+                    Incoming project
+                  </span>
+                  <p class="text-cream/90 text-sm font-light max-w-xs">Klipmengo LMS is currently in development. Public access is not available yet — stay tuned.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-2xl font-bold text-forest">Klipmengo LMS</h4>
+              <span class="px-2.5 py-1 bg-amber-100 text-amber-700 font-bold text-xs uppercase rounded-full border border-amber-300/50">Coming Soon</span>
+            </div>
+            <p class="text-sm text-forest/80 leading-relaxed font-light mb-6">
+              A modular, multi-tenant school collaboration and learning management platform. Empowers school supervisors, teachers, parents, and students with dashboard roles, automated substitutes, merit-point systems, and direct desktop-to-mobile QR authentication. <span class="font-semibold text-forest">Currently in development — public launch incoming.</span>
+            </p>
+
+            <!-- Tech Badges -->
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">Vite</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">Tailwind CSS</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">Modular ES6 JS</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">LocalStorage DB</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">QR Auth Engine</span>
+              <span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-bold rounded-md border border-amber-300/50">LMS • Upcoming</span>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <button disabled aria-disabled="true" title="Klipmengo LMS is not publicly available yet" class="flex-1 py-3 text-center bg-forest/40 text-cream/80 font-semibold rounded-full text-sm cursor-not-allowed flex items-center justify-center gap-2">
+              <span>Coming Soon — No Public Link Yet</span>
+              <span>⏳</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Project 2: Motcha Portfolio -->
+        <div class="bg-white/40 border border-forest/10 p-6 rounded-3xl shadow-lg hover:border-leaf/50 transition-all-custom flex flex-col justify-between group">
+          <div>
+            <!-- Browser Mockup -->
+            <div class="browser-frame rounded-xl overflow-hidden shadow-md mb-6 border border-forest/10 bg-forest-dark/5">
+              <div class="browser-header px-4 py-2 bg-forest/10 border-b border-forest/10 flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                <div class="bg-white/60 text-[10px] text-forest/70 px-4 py-0.5 rounded-md flex-1 text-center font-mono max-w-[200px] mx-auto truncate">motcha.netlify.app</div>
+              </div>
+              <div class="browser-body relative aspect-video overflow-hidden">
+                <img src="media/motcha_mockup.png" alt="Motcha Portfolio Mockup" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500">
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-2xl font-bold text-forest">Motcha Portfolio</h4>
+              <span class="px-2.5 py-1 bg-leaf/15 text-leaf font-bold text-xs uppercase rounded-full">Interactive UI</span>
+            </div>
+            <p class="text-sm text-forest/80 leading-relaxed font-light mb-6">
+              A high-performance personal portfolio site displaying creative work, bakes, and tech projects. Implements standard-setting scroll animations, GPU-accelerated elastic cursors, and custom canvas-based particle physics morphing.
+            </p>
+
+            <!-- Tech Badges -->
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">HTML5 / Semantic CSS</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">Tailwind CDN</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">Canvas Particle Physics</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">Elastic Cursor</span>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <a href="https://motcha.netlify.app" target="_blank" class="flex-1 py-3 text-center bg-forest text-cream hover:bg-leaf font-semibold rounded-full text-sm transition-all duration-300 shadow-sm flex items-center justify-center gap-2">
+              <span>Visit Live Site</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 3: Alnaqsha.ae -->
+        <div class="bg-white/40 border border-forest/10 p-6 rounded-3xl shadow-lg hover:border-leaf/50 transition-all-custom flex flex-col justify-between group">
+          <div>
+            <!-- Browser Mockup -->
+            <div class="browser-frame rounded-xl overflow-hidden shadow-md mb-6 border border-forest/10 bg-forest-dark/5">
+              <div class="browser-header px-4 py-2 bg-forest/10 border-b border-forest/10 flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                <div class="bg-white/60 text-[10px] text-forest/70 px-4 py-0.5 rounded-md flex-1 text-center font-mono max-w-[200px] mx-auto truncate">alnaqsha.ae</div>
+              </div>
+              <div class="browser-body relative aspect-video overflow-hidden bg-gradient-to-br from-forest via-forest-light to-leaf flex flex-col items-center justify-center gap-2 text-center p-6">
+                <span class="text-3xl sm:text-4xl font-playfair italic font-bold text-white tracking-tight">Al Naqsha</span>
+                <span class="text-[11px] uppercase tracking-[0.25em] text-cream/90 font-semibold">Stationery LLC</span>
+                <span class="mt-1 text-sm text-cream/90 font-light italic">Premium stationery, delivered with care.</span>
+                <span class="mt-2 px-3 py-1 bg-white/15 border border-white/25 text-white text-xs font-semibold rounded-full">Live E-commerce Store</span>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-2xl font-bold text-forest">Alnaqsha.ae</h4>
+              <span class="px-2.5 py-1 bg-leaf/15 text-leaf font-bold text-xs uppercase rounded-full">Live • E-commerce</span>
+            </div>
+            <p class="text-sm text-forest/80 leading-relaxed font-light mb-6">
+              A completed, live e-commerce store for Al Naqsha Stationery LLC. Customers can browse shop catalog and categories, manage cart and checkout, contact the store, and join the loyalty rewards program. For full details, visit the live site.
+            </p>
+
+            <!-- Tech Badges -->
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">E-commerce</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">Online Catalog &amp; Categories</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">Cart &amp; Checkout</span>
+              <span class="px-2 py-0.5 bg-forest/5 text-forest text-xs font-semibold rounded-md">Loyalty Rewards</span>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <a href="https://alnaqsha.ae" target="_blank" class="flex-1 py-3 text-center bg-forest text-cream hover:bg-leaf font-semibold rounded-full text-sm transition-all duration-300 shadow-sm flex items-center justify-center gap-2">
+              <span>Visit Live Site</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Media Gallery Section -->
+  <section id="gallery" class="py-24 px-6 bg-cream-light relative z-20">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center space-y-4 mb-16">
+        <h2 class="text-xs uppercase font-extrabold tracking-widest text-leaf">Life &amp; Creative Logs</h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-forest">Media Gallery</h3>
+        <p class="text-forest/70 max-w-xl mx-auto font-light">
+          A visual record of my school presentations, leadership roles, baking designs, and active ventures.
+        </p>
+      </div>
+
+      <!-- Interactive Carousel Component -->
+      <div class="relative max-w-4xl mx-auto bg-white/40 p-4 rounded-3xl shadow-xl backdrop-blur-md border border-forest/5" id="carousel-container">
+        
+        <!-- Media Slides Wrapper -->
+        <div class="relative h-[300px] sm:h-[450px] md:h-[500px] w-full rounded-2xl overflow-hidden bg-black/90 flex items-center justify-center">
+          
+          <!-- Slide 1 (Profile) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/Headshot.jpeg" alt="Muhammad Portrait" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">Muhammad</h4>
+              <p class="text-sm text-gray-300">BBA student, business owner, and creative leader.</p>
+            </div>
+          </div>
+
+          <!-- Slide 2 (Seminar) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/explaining how connections and relations build a healthy lifestyle.jpeg" alt="Presenting on connections and relationships for student growth" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">Leadership Seminars</h4>
+              <p class="text-sm text-gray-300">Explaining how healthy connections and relationships build supportive environments.</p>
+            </div>
+          </div>
+
+          <!-- Slide 3 (Award) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/winning a well being competition.jpeg" alt="Winning the wellness booth competition" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">Wellness Ambassador Achievements</h4>
+              <p class="text-sm text-gray-300">Winning a school wellness booth competition for supportive student outreach.</p>
+            </div>
+          </div>
+
+          <!-- Slide 4 (Second Place) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/winning 2nd place for Mental health competition.jpeg" alt="Winning second place in school mental health day" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">Advocating Mental Health</h4>
+              <p class="text-sm text-gray-300">Securing 2nd place for the wellness display during Mental Health Week events.</p>
+            </div>
+          </div>
+
+          <!-- Slide 5 (Baloon Outreach) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/Giving the principle a baloon on mental health day.jpeg" alt="Balloon presentation on mental health day" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">Principal Engagement</h4>
+              <p class="text-sm text-gray-300">Presenting a symbolic well-being balloon to our school principal on Mental Health Day.</p>
+            </div>
+          </div>
+
+          <!-- Slide 6 (Gifts) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/giving gifts to teachers.jpeg" alt="Giving handmade gifts to school teachers" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">Teacher Appreciation Day</h4>
+              <p class="text-sm text-gray-300">Designing and handing out custom appreciation gifts to teachers.</p>
+            </div>
+          </div>
+
+          <!-- Slide 7 (Cookies) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/the cookies i made.jpeg" alt="Homemade cookies prepared by Muhammad" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">Gourmet Catering Cookies</h4>
+              <p class="text-sm text-gray-300">Hand-kneaded cookies baked for custom event catering orders.</p>
+            </div>
+          </div>
+
+          <!-- Slide 8 (Donuts) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/The donuts i made.jpeg" alt="Glazed donuts prepared by Muhammad" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">Hand-cut Glazed Donuts</h4>
+              <p class="text-sm text-gray-300">Crispy, soft donuts decorated with custom glaze and chocolate toppings.</p>
+            </div>
+          </div>
+
+          <!-- Slide 9 (Pizza) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/the pizza i made.jpeg" alt="Artisanal homemade pizza" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">High-Hydration Italian Pizza</h4>
+              <p class="text-sm text-gray-300">Baking slow-fermentation crust showing bubbly open-rim rise.</p>
+            </div>
+          </div>
+
+          <!-- Slide 10 (Tortilla cones) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center">
+            <img src="media/tortilla cones.jpeg" alt="Handmade savory tortilla cones" class="w-full h-full object-contain">
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left">
+              <h4 class="text-lg font-semibold">Savory Event Platter Cones</h4>
+              <p class="text-sm text-gray-300">Crisp tortilla cones filled and styled for special catering setups.</p>
+            </div>
+          </div>
+
+          <!-- Slide 11 (Video 1 - Pitch) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center bg-black">
+            <video class="w-full h-full object-contain" loop playsinline controls preload="metadata">
+              <source src="media/Business pitch.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left pointer-events-none">
+              <h4 class="text-lg font-semibold">Business Startup Pitch</h4>
+              <p class="text-sm text-gray-300">Delivering an entrepreneurial presentation on marketing and sales metrics.</p>
+            </div>
+          </div>
+
+          <!-- Slide 12 (Video 2 - Random stuff) -->
+          <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out z-0 flex items-center justify-center bg-black">
+            <video class="w-full h-full object-contain" loop playsinline controls preload="metadata">
+              <source src="media/just me doing some random stuff.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/45 to-transparent p-6 text-white text-left pointer-events-none">
+              <h4 class="text-lg font-semibold">School Life &amp; Events</h4>
+              <p class="text-sm text-gray-300">Behind the scenes of event preparations and active classroom participation.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Navigation Buttons -->
+        <button id="carousel-prev" class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/70 hover:bg-white text-forest flex items-center justify-center shadow-lg transition-transform hover:scale-110 focus:outline-none z-40" aria-label="Previous slide">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button id="carousel-next" class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/70 hover:bg-white text-forest flex items-center justify-center shadow-lg transition-transform hover:scale-110 focus:outline-none z-40" aria-label="Next slide">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Pagination Bullets -->
+        <div id="carousel-dots" class="flex items-center justify-center gap-2 mt-4">
+          <!-- Dots populated dynamically by script.js -->
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Baking Section (Warm cozy menu aesthetic) -->
+  <section id="baking" class="py-24 px-6 relative z-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center space-y-4 mb-16">
+        <span class="bakery-accent-font text-leaf text-2xl">Homemade Cookie Venture</span>
+        <h2 class="text-4xl sm:text-5xl font-bold bakery-menu-font italic text-forest">The Bakery Menu Log</h2>
+        <div class="w-24 h-0.5 bg-leaf/30 mx-auto my-4"></div>
+        <p class="text-forest/80 max-w-xl mx-auto font-light text-sm italic">
+          "Homemade catering, cookie preps, and dough lamination." Serving custom event batches and sweet bakes since January 2024.
+        </p>
+      </div>
+
+      <!-- Cozy Bakery Board -->
+      <div class="baking-paper rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+        <!-- Flour/wheat illustrations (decorative SVGs) -->
+        <div class="absolute top-6 right-6 opacity-5 pointer-events-none hidden md:block">
+          <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2v20M17 5L7 19M7 5l10 14" />
+          </svg>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+          
+          <!-- Menu Left Side: Metric highlights and process -->
+          <div class="lg:col-span-5 flex flex-col justify-between space-y-8">
+            <div>
+              <h3 class="text-2xl font-bold bakery-menu-font text-forest mb-4 border-b border-forest/20 pb-2">Business Operations</h3>
+              <p class="text-forest/80 text-sm leading-relaxed mb-6 font-light">
+                Managing a remote self-employed cookie and catering venture in Dubai/Ajman. Handled end-to-end product design, packaging, dynamic pricing structures, and deliveries for private events and school socials.
+              </p>
+              
+              <!-- Metrics list -->
+              <div class="space-y-4">
+                <div class="flex items-center justify-between text-sm border-b border-forest/10 pb-2">
+                  <span class="font-semibold text-forest">Total Customers Served</span>
+                  <span class="bakery-accent-font text-leaf text-lg font-bold">1000+ Interactions</span>
+                </div>
+                <div class="flex items-center justify-between text-sm border-b border-forest/10 pb-2">
+                  <span class="font-semibold text-forest">Production Lead Time</span>
+                  <span class="bakery-accent-font text-leaf text-lg font-bold">Freshly Baked on Order</span>
+                </div>
+                <div class="flex items-center justify-between text-sm border-b border-forest/10 pb-2">
+                  <span class="font-semibold text-forest">Service Coverage</span>
+                  <span class="bakery-accent-font text-leaf text-lg font-bold">Dubai &amp; Ajman</span>
+                </div>
+                <div class="flex items-center justify-between text-sm border-b border-forest/10 pb-2">
+                  <span class="font-semibold text-forest">Product Quality Basis</span>
+                  <span class="bakery-accent-font text-leaf text-lg font-bold">Repeat Customers</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cozy Baking Quote -->
+            <div class="bg-forest/5 p-4 rounded-xl border border-forest/10 text-center italic text-xs text-forest/70 font-light">
+              "Customer satisfaction is built on word-of-mouth and product consistency."
+            </div>
+          </div>
+
+          <!-- Menu Right Side: Card Items -->
+          <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Card 1 -->
+            <div class="bg-white/60 p-6 rounded-2xl border border-forest/10 hover:border-leaf/50 transition-all-custom flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-3">
+                  <h4 class="font-semibold text-lg text-forest font-playfair italic">Gourmet Event Cookies</h4>
+                  <span class="text-leaf text-xs font-bold bg-leaf/10 py-1 px-2 rounded">Bestseller</span>
+                </div>
+                <p class="text-xs text-forest/70 leading-relaxed font-light">
+                  Hand-kneaded cookies baked to crisp-edged perfection. Created specifically for custom batches and local party orders.
+                </p>
+              </div>
+              <div class="mt-6 flex items-center justify-between border-t border-forest/10 pt-3 text-xs text-forest/60">
+                <span>Hand-kneaded</span>
+                <span class="font-bold text-leaf">Catering standard</span>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white/60 p-6 rounded-2xl border border-forest/10 hover:border-leaf/50 transition-all-custom flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-3">
+                  <h4 class="font-semibold text-lg text-forest font-playfair italic">Glazed Event Donuts</h4>
+                  <span class="text-leaf text-xs font-bold bg-leaf/10 py-1 px-2 rounded">Crispy</span>
+                </div>
+                <p class="text-xs text-forest/70 leading-relaxed font-light">
+                  Soft, airy glazed donuts decorated with custom sprinkles and chocolate coatings. Prepared fresh in batch quantities.
+                </p>
+              </div>
+              <div class="mt-6 flex items-center justify-between border-t border-forest/10 pt-3 text-xs text-forest/60">
+                <span>Glaze decorated</span>
+                <span class="font-bold text-leaf">Soft rise</span>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white/60 p-6 rounded-2xl border border-forest/10 hover:border-leaf/50 transition-all-custom flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-3">
+                  <h4 class="font-semibold text-lg text-forest font-playfair italic">High-Hydration Pizzas</h4>
+                  <span class="text-leaf text-xs font-bold bg-leaf/10 py-1 px-2 rounded">Artisanal</span>
+                </div>
+                <p class="text-xs text-forest/70 leading-relaxed font-light">
+                  Classic Italian pizzas using high-hydration dough fermentation. Yields a light, airy rim rise and crisp bite.
+                </p>
+              </div>
+              <div class="mt-6 flex items-center justify-between border-t border-forest/10 pt-3 text-xs text-forest/60">
+                <span>Fermented dough</span>
+                <span class="font-bold text-leaf">Golden base</span>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white/60 p-6 rounded-2xl border border-forest/10 hover:border-leaf/50 transition-all-custom flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-3">
+                  <h4 class="font-semibold text-lg text-forest font-playfair italic">Savory Tortilla Cones</h4>
+                  <span class="text-leaf text-xs font-bold bg-leaf/10 py-1 px-2 rounded">Appetizer</span>
+                </div>
+                <p class="text-xs text-forest/70 leading-relaxed font-light">
+                  Creative, crispy tortilla cone cups stuffed with savory fillings. Perfect finger foods styled for custom events.
+                </p>
+              </div>
+              <div class="mt-6 flex items-center justify-between border-t border-forest/10 pt-3 text-xs text-forest/60">
+                <span>Filled &amp; baked</span>
+                <span class="font-bold text-leaf">Catering exclusive</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Entrepreneurship & Leadership Section (Sharp professional layout) -->
+  <section id="ventures" class="py-24 px-6 bg-forest text-cream relative z-20 overflow-hidden">
+    <!-- Subtle grid lines for high tech feel -->
+    <div class="absolute inset-0 opacity-5 pointer-events-none">
+      <svg width="100%" height="100%">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        
+        <!-- Left Side: Narrative & Strategy -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="inline-flex items-center gap-2 text-mint font-bold tracking-widest text-xs uppercase bg-white/10 py-1.5 px-3 rounded-full w-fit">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+            VENTURES &amp; LEADERSHIP
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            Connecting Communities, Driving Sales
+          </h2>
+          <p class="text-cream/80 text-base sm:text-lg font-light leading-relaxed">
+            I apply creative selling, team coordination, and student engagement methods to drive results. From managing resin keychain retail to hosting assemblies for 3,000+ students, my focus is on execution and clear communication.
+          </p>
+          
+          <div class="space-y-4 pt-2">
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-leaf text-forest flex items-center justify-center font-bold text-xs mt-1">✓</span>
+              <div>
+                <h4 class="font-semibold text-white">Resin Art Seller &amp; Team Leader</h4>
+                <p class="text-sm text-cream/70 font-light">Designed customized resin items, managed checkout points, branding, and coordinated a team of 3 carnival booth staffers.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-leaf text-forest flex items-center justify-center font-bold text-xs mt-1">✓</span>
+              <div>
+                <h4 class="font-semibold text-white">Happiness Ambassador (Student Council)</h4>
+                <p class="text-sm text-cream/70 font-light">Conducted student seminars, supported well-being, and delivered screens addiction workshops to over 3,000 students.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-leaf text-forest flex items-center justify-center font-bold text-xs mt-1">✓</span>
+              <div>
+                <h4 class="font-semibold text-white">Business Operations Assistant</h4>
+                <p class="text-sm text-cream/70 font-light">Supported spare parts and tools retail coordination at Bait Arab, managing logistics and inventory databases.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Metrics Dashboard Grid -->
+        <div class="lg:col-span-7 grid grid-cols-2 gap-4 sm:gap-6">
+          
+          <!-- Metric Card 1 -->
+          <div class="sales-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all-custom group">
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-cream/60 text-xs font-semibold uppercase tracking-wider">Student Impact</span>
+              <span class="text-mint text-lg group-hover:scale-110 transition-transform">👥</span>
+            </div>
+            <div>
+              <div class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-2">
+                <span class="counter-num" data-target="3000">0</span>+
+              </div>
+              <p class="text-xs sm:text-sm text-cream/70 font-light">Students reached through Happiness Ambassador wellness events and seminars.</p>
+            </div>
+          </div>
+
+          <!-- Metric Card 2 -->
+          <div class="sales-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all-custom group">
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-cream/60 text-xs font-semibold uppercase tracking-wider">Cookie Clients</span>
+              <span class="text-mint text-lg group-hover:scale-110 transition-transform">🍪</span>
+            </div>
+            <div>
+              <div class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-2">
+                <span class="counter-num" data-target="1000">0</span>+
+              </div>
+              <p class="text-xs sm:text-sm text-cream/70 font-light">Total customer base reached via homemade cookie catering and word-of-mouth.</p>
+            </div>
+          </div>
+
+          <!-- Metric Card 3 -->
+          <div class="sales-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all-custom group">
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-cream/60 text-xs font-semibold uppercase tracking-wider">Resin Art Customers</span>
+              <span class="text-mint text-lg group-hover:scale-110 transition-transform">🎨</span>
+            </div>
+            <div>
+              <div class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-2">
+                <span class="counter-num" data-target="600">0</span>+
+              </div>
+              <p class="text-xs sm:text-sm text-cream/70 font-light">Client orders managed for resin decorative items and custom key chains.</p>
+            </div>
+          </div>
+
+          <!-- Metric Card 4 -->
+          <div class="sales-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all-custom group">
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-cream/60 text-xs font-semibold uppercase tracking-wider">Event Profit Margin</span>
+              <span class="text-mint text-lg group-hover:scale-110 transition-transform">📊</span>
+            </div>
+            <div>
+              <div class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-2">
+                <span class="counter-num" data-target="33">0</span>%
+              </div>
+              <p class="text-xs sm:text-sm text-cream/70 font-light">Profit secured during our school carnival event booth (300 AED total revenue).</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificates & Credentials Section -->
+  <section id="certificates" class="py-24 px-6 bg-cream-light relative z-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center space-y-4 mb-16">
+        <h2 class="text-xs uppercase font-extrabold tracking-widest text-leaf">Verified Credentials</h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-forest">Resume &amp; Certificates</h3>
+        <div class="w-16 h-0.5 bg-leaf/40 mx-auto mt-4"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <!-- Certificate Showcase Card -->
+        <div class="bg-white/40 border border-forest/10 p-6 rounded-3xl shadow-lg flex flex-col gap-6 items-center text-center">
+          <div class="w-20 h-20 rounded-full bg-leaf/10 flex items-center justify-center text-3xl text-leaf">
+            📜
+          </div>
+          <div>
+            <h4 class="text-xl font-bold text-forest">Verified Certifications</h4>
+            <p class="text-xs text-forest/70 mt-1">Official Records</p>
+            <p class="text-sm text-forest/80 mt-4 leading-relaxed font-light">
+              Official certificate verification record containing validated school leadership achievements, awards, and event credentials.
+            </p>
+          </div>
+          <div class="flex gap-4 w-full">
+            <a href="certificates/Certificates.pdf" target="_blank" class="flex-1 py-3 text-center border-2 border-forest text-forest hover:bg-forest hover:text-cream font-semibold rounded-full text-sm transition-all duration-300">
+              View PDF
+            </a>
+            <a href="certificates/Certificates.pdf" download class="flex-1 py-3 text-center bg-forest text-cream hover:bg-leaf font-semibold rounded-full text-sm transition-all duration-300 shadow-sm">
+              Download PDF
+            </a>
+          </div>
+        </div>
+
+        <!-- Resume Download Card -->
+        <div class="bg-white/40 border border-forest/10 p-6 rounded-3xl shadow-lg flex flex-col gap-6 items-center text-center">
+          <div class="w-20 h-20 rounded-full bg-forest/10 flex items-center justify-center text-3xl text-forest">
+            👤
+          </div>
+          <div>
+            <h4 class="text-xl font-bold text-forest">Muhammad's Resume</h4>
+            <p class="text-xs text-forest/70 mt-1">First-Year BBA Student</p>
+            <p class="text-sm text-forest/80 mt-4 leading-relaxed font-light">
+              Detailed overview of my academic records at East Point Indian International School, remote business history, and council leadership.
+            </p>
+          </div>
+          <div class="flex gap-4 w-full">
+            <a href="resume/Resume Muhammad Naeem.pdf" target="_blank" class="flex-1 py-3 text-center border-2 border-forest text-forest hover:bg-forest hover:text-cream font-semibold rounded-full text-sm transition-all duration-300">
+              Open Resume
+            </a>
+            <a href="resume/Resume Muhammad Naeem.pdf" download class="flex-1 py-3 text-center bg-forest text-cream hover:bg-leaf font-semibold rounded-full text-sm transition-all duration-300 shadow-sm">
+              Download Resume
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-24 px-6 bg-cream border-t border-forest/5 relative z-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center space-y-4 mb-16">
+        <h2 class="text-xs uppercase font-extrabold tracking-widest text-leaf">Start A Conversation</h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-forest">Get In Touch</h3>
+        <p class="text-forest/70 font-light text-sm">
+          Have a business inquiry, want to place a custom cookie catering order, or discuss creative designs? Reach out!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <!-- Direct Contact Details -->
+        <div class="lg:col-span-5 flex flex-col justify-between space-y-8 bg-white/40 border border-forest/5 p-8 rounded-3xl shadow-xl backdrop-blur-md">
+          <div class="space-y-6">
+            <h4 class="text-xl font-bold text-forest mb-4">Contact Information</h4>
+            
+            <!-- Email -->
+            <a href="mailto:allocator123@gmail.com" class="flex items-center gap-4 p-4 bg-cream-light/40 border border-forest/5 rounded-2xl hover:border-leaf transition-colors duration-300 group">
+              <div class="w-12 h-12 rounded-xl bg-forest text-cream flex items-center justify-center text-xl group-hover:bg-leaf transition-colors">
+                ✉
+              </div>
+              <div>
+                <p class="text-xs text-forest/60 uppercase font-semibold">Email Me</p>
+                <p class="text-sm font-semibold text-forest">allocator123@gmail.com</p>
+              </div>
+            </a>
+
+            <!-- Phone -->
+            <a href="tel:+971526344210" class="flex items-center gap-4 p-4 bg-cream-light/40 border border-forest/5 rounded-2xl hover:border-leaf transition-colors duration-300 group">
+              <div class="w-12 h-12 rounded-xl bg-forest text-cream flex items-center justify-center text-xl group-hover:bg-leaf transition-colors">
+                📞
+              </div>
+              <div>
+                <p class="text-xs text-forest/60 uppercase font-semibold">Call / WhatsApp</p>
+                <p class="text-sm font-semibold text-forest">+971-526344210</p>
+              </div>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://instagram.com/busi.motcha" target="_blank" class="flex items-center gap-4 p-4 bg-cream-light/40 border border-forest/5 rounded-2xl hover:border-leaf transition-colors duration-300 group">
+              <div class="w-12 h-12 rounded-xl bg-forest text-cream flex items-center justify-center text-xl group-hover:bg-leaf transition-colors">
+                📸
+              </div>
+              <div>
+                <p class="text-xs text-forest/60 uppercase font-semibold">Follow Instagram</p>
+                <p class="text-sm font-semibold text-forest">@busi.motcha</p>
+              </div>
+            </a>
+          </div>
+
+          <div class="p-4 bg-forest/5 border border-forest/10 rounded-2xl text-center">
+            <p class="text-xs text-forest/70 font-semibold uppercase">Primary Location</p>
+            <p class="text-sm text-forest mt-1">Ajman, United Arab Emirates</p>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form action="#" class="lg:col-span-7 space-y-6 bg-white/40 border border-forest/5 p-8 rounded-3xl shadow-xl backdrop-blur-md" id="contact-form">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="relative">
+              <input type="text" id="name" required placeholder=" " class="w-full bg-cream-light/60 border border-forest/15 rounded-xl px-4 py-3.5 text-sm text-forest placeholder-transparent focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf peer transition-colors">
+              <label for="name" class="absolute left-4 top-3.5 text-xs text-forest/60 pointer-events-none transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5 peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:text-leaf -translate-y-2.5 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-2.5 bg-cream px-1 rounded">Full Name</label>
+            </div>
+            <div class="relative">
+              <input type="email" id="email" required placeholder=" " class="w-full bg-cream-light/60 border border-forest/15 rounded-xl px-4 py-3.5 text-sm text-forest placeholder-transparent focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf peer transition-colors">
+              <label for="email" class="absolute left-4 top-3.5 text-xs text-forest/60 pointer-events-none transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5 peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:text-leaf -translate-y-2.5 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-2.5 bg-cream px-1 rounded">Email Address</label>
+            </div>
+          </div>
+
+          <div class="relative">
+            <input type="text" id="subject" required placeholder=" " class="w-full bg-cream-light/60 border border-forest/15 rounded-xl px-4 py-3.5 text-sm text-forest placeholder-transparent focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf peer transition-colors">
+            <label for="subject" class="absolute left-4 top-3.5 text-xs text-forest/60 pointer-events-none transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5 peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:text-leaf -translate-y-2.5 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-2.5 bg-cream px-1 rounded">Subject</label>
+          </div>
+
+          <div class="relative">
+            <textarea id="message" required rows="4" placeholder=" " class="w-full bg-cream-light/60 border border-forest/15 rounded-xl px-4 py-3.5 text-sm text-forest placeholder-transparent focus:outline-none focus:border-leaf focus:ring-1 focus:ring-leaf peer transition-colors resize-none"></textarea>
+            <label for="message" class="absolute left-4 top-3.5 text-xs text-forest/60 pointer-events-none transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5 peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:text-leaf -translate-y-2.5 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-2.5 bg-cream px-1 rounded">Your Message</label>
+          </div>
+
+          <button type="submit" class="w-full py-4 bg-forest hover:bg-leaf text-cream font-semibold rounded-xl transition-all duration-300 shadow-md flex items-center justify-center gap-2">
+            <span>Send Message</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-forest-dark text-cream/70 py-12 px-6 border-t border-white/5 relative z-20">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex flex-col items-center md:items-start gap-2">
+        <a href="#home" class="text-xl font-bold font-playfair italic text-white flex items-center gap-2">
+          <span class="w-8 h-8 rounded-full bg-leaf text-forest flex items-center justify-center font-bold text-sm not-italic">MN</span>
+          Muhammad's Portfolio
+        </a>
+        <p class="text-xs font-light mt-1">&copy; 2026 Muhammad. All rights reserved.</p>
+      </div>
+
+      <!-- Quick Nav Links -->
+      <div class="flex flex-wrap items-center justify-center gap-6 text-sm">
+        <a href="#home" class="hover:text-white transition-colors">Home</a>
+        <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+        <a href="#gallery" class="hover:text-white transition-colors">Gallery</a>
+        <a href="#baking" class="hover:text-white transition-colors">Cookie Business</a>
+        <a href="#ventures" class="hover:text-white transition-colors">Ventures</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </div>
+
+      <!-- Arrow Back to Top -->
+      <a href="#home" class="w-10 h-10 rounded-full border border-white/10 hover:border-leaf text-cream hover:text-white flex items-center justify-center transition-colors shadow-sm" aria-label="Scroll back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Link Custom Javascript Engine -->
+  <script src="script.js"></script>
+</body>
+</html>
+
