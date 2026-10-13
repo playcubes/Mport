@@ -100,6 +100,7 @@ Any static host works (Netlify / Vercel / GitHub Pages / Cloudflare Pages). Draf
 - Email: allocator123@gmail.com
 - Phone/WhatsApp: +971-526344210
 - Instagram: [@busi.motcha](https://instagram.com/busi.motcha)
+- LinkedIn: [Muhammad Naeem](https://www.linkedin.com/in/muhammad-naeem-b998a723b)
 - Location: Ajman, UAE
 
 ---
